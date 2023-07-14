@@ -30,9 +30,29 @@ var json_data = [
       "completed": false
     }
   ];
+
+  const addDelete = (li) => {
+    let del = document.createElement("a");
+    del.setAttribute("class","btn btn-sm btn-danger m-1 delete");
+    // del.append(document.createTextNode("Delete"));
+    del.innerText = "Delete";
+    li.append(del);
+  }
+
+  const del = (element) => {
+    list.removeChild(element.parentElement)
+  }
+
   let list = document.querySelector("#todo-list");
   json_data.forEach((item) => {
     let li = document.createElement("li");
     li.append(document.createTextNode(item.title));
+    addDelete(li);
     list.append(li);
   })
+
+  let delBtns = document.querySelectorAll(".delete");
+  delBtns.forEach((item) => {
+    item.addEventListener("click",() => {del(item)});
+  })
+
