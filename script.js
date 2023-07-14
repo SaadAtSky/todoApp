@@ -34,8 +34,7 @@ var json_data = [
   const addDelete = (li) => {
     let del = document.createElement("a");
     del.setAttribute("class","btn btn-sm btn-danger m-1 delete");
-    // del.append(document.createTextNode("Delete"));
-    del.innerText = "Delete";
+    del.append(document.createTextNode("Delete"));
     li.append(del);
   }
 
@@ -43,16 +42,31 @@ var json_data = [
     list.removeChild(element.parentElement)
   }
 
-  let list = document.querySelector("#todo-list");
-  json_data.forEach((item) => {
+  const addTodo = () => {
+    let newTodo = document.querySelector("#newItem").value
+    addToList(newTodo)
+    addEventListener();
+  }
+
+  const addToList = (item) => {
     let li = document.createElement("li");
-    li.append(document.createTextNode(item.title));
+    li.append(document.createTextNode(item));
     addDelete(li);
     list.append(li);
-  })
+  }
 
-  let delBtns = document.querySelectorAll(".delete");
-  delBtns.forEach((item) => {
-    item.addEventListener("click",() => {del(item)});
+  const addEventListener = () => {
+    let delBtns = document.querySelectorAll(".delete");
+    delBtns.forEach((item) => {
+      item.addEventListener("click",() => {del(item)});
+    })
+  }
+
+  let list = document.querySelector("#todo-list");
+  json_data.forEach((item) => {
+    addToList(item.title)
   })
+  addEventListener();
+
+
 
