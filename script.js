@@ -30,3 +30,9 @@ var json_data = [
       "completed": false
     }
   ];
+  let list = document.querySelector("#todo-list");
+  json_data.forEach((item) => {
+    let li = document.createElement("li");
+    li.append(document.createTextNode(item.title));
+    list.append(li);
+  })
