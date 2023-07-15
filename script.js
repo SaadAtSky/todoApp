@@ -1,6 +1,8 @@
 $(".deleteAll").on("click",() => {
-    localStorage.removeItem("json_data");
-    $("#todo-list").empty();
+    if(confirm("You sure you wanan do this m8 ?")){
+        localStorage.removeItem("json_data");
+        $("#todo-list").empty();
+    }
 })
 const storeLocal = (newTodo) => {
     // get stuff from LC
