@@ -1,6 +1,6 @@
-document.querySelector(".deleteAll").addEventListener("click",() => {
-    localStorage.removeItem("json_data")
-    list.innerHTML = ""
+$(".deleteAll").on("click",() => {
+    localStorage.removeItem("json_data");
+    $("#todo-list").empty();
 })
 const storeLocal = (newTodo) => {
     // get stuff from LC
@@ -21,44 +21,31 @@ const storeLocal = (newTodo) => {
     localStorage.setItem("json_data",JSON.stringify(currentData));  
     return newData.id
 }
-  const addDelete = (li) => {
-    let del = document.createElement("a");
-    del.setAttribute("class","btn btn-sm btn-danger m-1 delete");
-    del.append(document.createTextNode("Delete"));
-    li.append(del);
-  }
 
   const addTodo = () => {
     let newTodo = document.querySelector("#newItem").value
     let id = storeLocal(newTodo);
-    addToList(newTodo,id);
+    let li = '<li data-id="'+id+'">'+newTodo+'<a href="#" class="btn btn-sm btn-danger m-1 delete">Delete</a></li>'
+    $("#todo-list").append(li);
     addEventListener();
   }
 
-  const addToList = (item,id) => {
-    let li = document.createElement("li");
-    li.append(document.createTextNode(item));
-    li.dataset.id = id;
-    addDelete(li);
-    list.append(li);
-  }
-
   const addEventListener = () => {
-    $(".delete").on("click",function() {
-        list.removeChild(this.parentElement)
+    $(".delete").on("click",function() {//imp
+        let id = $(this).parent().attr("data-id")
+        $("li[data-id="+id+"]").remove()// imp
         // retrieve LC data
         let data = JSON.parse(localStorage.getItem("json_data"));
     
         // remove the specified ID
-        delete data[this.parentElement.dataset.id]
+        delete data[id]
     
         // return updated data back to LC
         localStorage.setItem("json_data",JSON.stringify(data));
     });
     }
 
-  let list = document.querySelector("#todo-list");
-  document.querySelector(".btn").addEventListener("click",addTodo);
+  $(".btn").on("click",addTodo);
 
   let json_data = JSON.parse(localStorage.getItem("json_data"));
   if(json_data){// improvement
