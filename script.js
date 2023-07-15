@@ -1,36 +1,7 @@
-// var json_data = [
-//     {
-//       "userId": 1,
-//       "id": 1,
-//       "title": "delectus aut autem",
-//       "completed": false
-//     },
-//     {
-//       "userId": 1,
-//       "id": 2,
-//       "title": "quis ut nam facilis et officia qui",
-//       "completed": false
-//     },
-//     {
-//       "userId": 1,
-//       "id": 3,
-//       "title": "fugiat veniam minus",
-//       "completed": false
-//     },
-//     {
-//       "userId": 1,
-//       "id": 4,
-//       "title": "et porro tempora",
-//       "completed": true
-//     },
-//     {
-//       "userId": 1,
-//       "id": 5,
-//       "title": "laboriosam mollitia et enim quasi adipisci quia provident illum",
-//       "completed": false
-//     }
-//   ];
-
+document.querySelector(".deleteAll").addEventListener("click",() => {
+    localStorage.removeItem("json_data")
+    list.innerHTML = ""
+})
 const storeLocal = (newTodo) => {
     // get stuff from LC
     let currentData = JSON.parse(localStorage.getItem("json_data"));
@@ -57,18 +28,6 @@ const storeLocal = (newTodo) => {
     li.append(del);
   }
 
-  const del = (element) => {
-    list.removeChild(element.parentElement)
-    // retrieve LC data
-    let data = JSON.parse(localStorage.getItem("json_data"));
-
-    // remove the specified ID
-    delete data[element.parentElement.dataset.id]
-
-    // return updated data back to LC
-    localStorage.setItem("json_data",JSON.stringify(data));
-  }
-
   const addTodo = () => {
     let newTodo = document.querySelector("#newItem").value
     let id = storeLocal(newTodo);
@@ -82,13 +41,23 @@ const storeLocal = (newTodo) => {
     li.dataset.id = id;
     addDelete(li);
     list.append(li);
-    console.log(list)
   }
 
   const addEventListener = () => {
     let delBtns = document.querySelectorAll(".delete");
     delBtns.forEach((item) => {
-      item.addEventListener("click",() => {del(item)});
+      item.addEventListener("click",function() {
+        console.log(this.parentElement)
+        list.removeChild(this.parentElement)
+        // retrieve LC data
+        let data = JSON.parse(localStorage.getItem("json_data"));
+    
+        // remove the specified ID
+        delete data[this.parentElement.dataset.id]
+    
+        // return updated data back to LC
+        localStorage.setItem("json_data",JSON.stringify(data));
+    });
     })
   }
 
