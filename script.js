@@ -44,10 +44,7 @@ const storeLocal = (newTodo) => {
   }
 
   const addEventListener = () => {
-    let delBtns = document.querySelectorAll(".delete");
-    delBtns.forEach((item) => {
-      item.addEventListener("click",function() {
-        console.log(this.parentElement)
+    $(".delete").on("click",function() {
         list.removeChild(this.parentElement)
         // retrieve LC data
         let data = JSON.parse(localStorage.getItem("json_data"));
@@ -58,8 +55,7 @@ const storeLocal = (newTodo) => {
         // return updated data back to LC
         localStorage.setItem("json_data",JSON.stringify(data));
     });
-    })
-  }
+    }
 
   let list = document.querySelector("#todo-list");
   document.querySelector(".btn").addEventListener("click",addTodo);

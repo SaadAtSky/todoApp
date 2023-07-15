@@ -1,6 +1,5 @@
-.flex-container {
-    display: flex;
-    justify-content: space-between;
-    width: 400px;
-    margin: auto;
+@media screen and (max-width:390px) {
+    .row {
+        display: block;
+    }
 }
