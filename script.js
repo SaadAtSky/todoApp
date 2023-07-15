@@ -63,6 +63,7 @@
   }
 
   let list = document.querySelector("#todo-list");
+  document.querySelector(".btn").addEventListener("click",addTodo);
 //   json_data.forEach((item) => {
 //     addToList(item.title)
 //   })
