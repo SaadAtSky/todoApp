@@ -22,18 +22,25 @@ const storeLocal = (newTodo) => {
     return newData.id
 }
 
-  const addTodo = () => {
-    let newTodo = document.querySelector("#newItem").value
-    let id = storeLocal(newTodo);
-    let li = '<li data-id="'+id+'">'+newTodo+'<a href="#" class="btn btn-sm btn-danger m-1 delete">Delete</a></li>'
-    $("#todo-list").append(li);
-    addEventListener();
+  const addTodo = (title,id) => {
+    if(!title || !id){
+        title = document.querySelector("#newItem").value
+        if(title){
+            id = storeLocal(title);
+        }
+    }
+    if(title){
+        let li = '<li style="display:none;" data-id="'+id+'">'+title+'<a href="#" class="btn btn-sm btn-danger m-1 delete">Delete</a></li>'
+        $("#todo-list").append(li);
+        $("li[data-id="+id+"]").fadeIn();
+        deleteEventListener();
+    }
   }
 
-  const addEventListener = () => {
+  const deleteEventListener = () => {
     $(".delete").on("click",function() {//imp
         let id = $(this).parent().attr("data-id")
-        $("li[data-id="+id+"]").remove()// imp
+        $("li[data-id="+id+"]").slideUp()// imp
         // retrieve LC data
         let data = JSON.parse(localStorage.getItem("json_data"));
     
@@ -51,7 +58,7 @@ const storeLocal = (newTodo) => {
   if(json_data){// improvement
     json_data.forEach(item => {
         if(item){
-            addToList(item.title);
+            addTodo(item.title,item.id);
         }
       })
   }
